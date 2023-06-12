@@ -28,8 +28,8 @@
     return tStr;
     }
     function genTable1( Nfil,  Ncol) {// alert (Nfil + ","+ Ncol); 
-    var Suc = ["Mes","Santa Fe", "Parana", "Santo Tome","Rafaela","Rosario"];
-    var Mes =["","ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"]
+    var Suc = ["Mes","Santa Fe", "Parana", "Santo Tome","Rafaela","Rosario", "Total Mes"];
+    var Mes =["","ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC", "Total Sucursal"]
     
     var f,c, tStr;
     Ncol++;
@@ -58,7 +58,7 @@
       grid-template-columns: auto auto;
       background-color: #2196F3;
       padding: 2px;
-     justify-content: left;
+      /* justify-content: left; */
     }
     .grid-item {
     width:100%;
@@ -305,7 +305,7 @@
     <h1> Ventas mensuales por Sucursal</h1>
 
     <label for="sucursales">Cuantas sucursales desea visualizar ?</label>
-    <select id="sucursales" name="sucursales">
+    <select id="sucursales" name="sucursales" onchange="actualizarTabla()">
     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
@@ -359,5 +359,45 @@
     if (x ==13) document.getElementById ("CLK").focus();
     }
     </script>
+
+    <script>
+      function actualizarTabla() {
+        var select = document.getElementById("sucursales");
+        var numSucursales = parseInt(select.value);
+
+        var tabla = document.getElementById("emptyTable");
+        tabla.innerHTML = genTable1(12,numSucursales);
+        actualizarTotales(datos);
+      }
+
+      function actualizarTotales(datos) {
+        for (let mes in datos) {
+        let totalMes = 0;
+        for (let sucursal in datos[mes]) {
+          totalMes += datos[mes][sucursal];
+        }
+        datos[mes]['Total Mes'] = totalMes;
+      }
+
+      // Calcular el total de todos los meses de cada sucursal
+      let totalesSucursal = {};
+      for (let mes in datos) {
+        for (let sucursal in datos[mes]) {
+          totalesSucursal[sucursal] = (totalesSucursal[sucursal] || 0) + datos[mes][sucursal];
+        }
+      }
+
+      // Agregar fila con el total de todos los meses de cada sucursal
+      let totalTodosLosMeses = 0;
+      for (let sucursal in totalesSucursal) {
+        datos['Total Sucursal'][sucursal] = totalesSucursal[sucursal];
+        totalTodosLosMeses += totalesSucursal[sucursal];
+      }
+      datos['Total Sucursal']['Total Mes'] = totalTodosLosMeses;
+      return datos;
+      }
+
+    </script>
     
-    </body></html>
+  </body>
+</html>
