@@ -1,114 +1,64 @@
 <html><head> 
-    <title id="T1">
-    Ventas
-    </title>
-    <style>
-    #BGC{background-color: lightblue}
-    #BGC:hover{background-color: yellow}
-    </style>
+
+    <title id="T1">Ventas Sucursales</title>
+    <link rel="stylesheet" href="styles.css">
+
     <script>
-     datos =[0,1,2,3,4,5,6,7,8,9,10,11,12];
-    for (let f=0;f<=12;f++) datos[f]= ["0","a","a","a","a","a"];
+
+    datos =[0,1,2,3,4,5,6,7,8,9,10,11,12,13];
+    for (let f=0;f<=13;f++) datos[f]= ["0","a","a","a","a","a","t"];
     
-    for (let f=1;f<=12;f++){
+    for (let f=1;f<=13;f++){
         for (let c=1;c<=5;c++) 
             datos[f][c]= Math.round(50+Math.random()*50);
-            }
+    }
     
-    function genTable(){
-    var f,c, tStr;
-    tStr='<Table  style:background-color: lightblue;">';
-    for (f=1;f<4;f++){
-    tStr += "<TR>";
-    for (c=1;c<11;c++){tStr += '<TD id = "BGC">' + f + ','+c + '</TD>';}
-    tStr += "</TR>";
-    //alert (tStr);
-    }
-    tStr += "</Table>";
-    return tStr;
-    }
-    function genTable1( Nfil,  Ncol) {// alert (Nfil + ","+ Ncol); 
-    var Suc = ["Mes","Santa Fe", "Parana", "Santo Tome","Rafaela","Rosario", "Total Mes"];
-    var Mes =["","ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC", "Total Sucursal"]
+    function genTable1(Ncol) {
+    var Suc = ["Mes","Santa Fe", "Parana", "Santo Tome","Rafaela","Rosario"];
+    var Mes =["","ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC", "TOTAL"]
     
     var f,c, tStr;
     Ncol++;
-    Nfil++;
     tStr="";
     for (c=0;c<Ncol;c++){ tStr += '<TH id = "BGC"> ' + Suc[c] +' </TH>'; }
+    tStr += '<TH id = "BGC"> Total Sucursal </TH>';
     
-    for (f=1;f<Nfil;f++){
-    tStr += "<TR>";
-    tStr += '<TD id = "BGC"> ' +  Mes[f] + '</TD>';
-    //for (c=1;c<Ncol;c++){ tStr += '<TD id = "BGC"  >   <input class = "NF2" name="NFIL" type="text" id = "C' + c +"_"+ f + '" value ="'+ Math.round(50+Math.random()*50) + '" onClick= "ClkTD(this.id)" onkeypress = "myFunction(event);"> </TD>'; }
-    for (c=1;c<Ncol;c++){ tStr += '<TD id = "BGC"  >   <input class = "NF2" name="NFIL" type="text" id = "C' + c +"_"+ f + '" value ="'+ datos[f][c] + '" onClick= "ClkTD(this.id)" onkeypress = "myFunction(event);"> </TD>'; }
-    
-    
-    tStr += "</TR>";
+    for (f=1;f<13;f++){
+      tStr += "<TR>";
+      tStr += '<TD id = "BGC"> ' +  Mes[f] + '</TD>';
+      //for (c=1;c<Ncol;c++){ tStr += '<TD id = "BGC"  >   <input class = "NF2" name="NFIL" type="text" id = "C' + c +"_"+ f + '" value ="'+ Math.round(50+Math.random()*50) + '" onClick= "ClkTD(this.id)" onkeypress = "myFunction(event);"> </TD>'; }
+      var acum = 0;
+      for (c=1;c<Ncol;c++){
+        tStr += '<TD id = "BGC"  >   <input class = "NF2" name="NFIL" type="text" id = "C' + c +"_"+ f + '" value ="'+ datos[f][c] + '" onClick= "ClkTD(this.id)" onkeypress = "myFunction(event);"> </TD>';
+        acum += datos[f][c];
+      }
+      tStr += '<TD id = "BGC"  >   <input class = "NF2 total" name="NFIL" type="text" id = "C' + c +"_"+ f + '" value ="'+ acum + '" onClick= "ClkTD(this.id)" onkeypress = "myFunction(event);" disabled> </TD>';
+      tStr += "</TR>";
     }
+    tStr += '<TR><TD id = "BGC">TOTAL</TD>';
+      
+    var acumTotal = 0;
+    for (c=1;c<Ncol;c++){
+      var acum = 0;
+      for (f=1;f<13;f++){
+        acum += datos[f][c];
+      }
+      tStr += '<TD id = "BGC"  >   <input class = "NF2 total" name="NFIL" type="text" id = "C' + c +"_"+ f + '" value ="'+ acum + '" onClick= "ClkTD(this.id)" onkeypress = "myFunction(event);" disabled> </TD>';
+      acumTotal += acum;
+    }
+    tStr += '<TD id = "BGC"  >   <input class = "NF2 total" name="NFIL" type="text" id = "C' + c +"_"+ f + '" value ="'+ acumTotal + '" onClick= "ClkTD(this.id)" onkeypress = "myFunction(event);" disabled> </TD>';
+      
+
+    // aca termina la ultima fila con totales
+
+
     //tStr += "</Table>";
     //alert (tStr);
     return tStr;
     }
+
     </script>
-    <style>
-    .grid-container {
-    width: 100%;
-      display: grid;
-      grid-template-columns: auto auto;
-      background-color: #2196F3;
-      padding: 2px;
-      /* justify-content: left; */
-    }
-    .grid-item {
-    width:100%;
-      background-color: rgba(255,200,200,1);
-      border: 1px solid rgba(0, 0, 255, 1);
-      padding: 0px;
-      font-size: 10px;
-      text-align: center;
-    }
-    #NF1 {  
-    width: 100%;
-    background-color: rgba(200,200,200,0);
-      border: 0px solid rgba(0, 0, 0, 0.8);
-      padding: 0px;
-      font-size: 30px;
-      text-align: center;
-    }
-    #NF1:hover {  
-    background-color: rgba(255,255,255,.55);
-    
-    }
-    .NF2 {  
-    width: 100%;
-    background-color: rgba(200,200,200,.8);
-      border: 0px solid rgba(0, 0, 0, 0.8);
-      padding: 1px;
-    
-      font-size: 16px;
-      text-align: center;
-    }
-    .NF2:hover {  
-    
-    text-align: center;
-    background-color: rgba(255,255,255,.55);
-    
-    }
-    .NF2:focus {  
-    border: 2px dotted rgba(0, 0, 255, 1);;
-    border-color: blue;
-    background-color: rgba(255,255,255,1);
-    
-    }
-    #NF1:focus {  
-    border: 2px dotted rgba(0, 0, 255, 1);;
-    border-color: blue;
-    background-color: rgba(255,255,255,1);
-    
-    }
-    
-    </style>
+
     <script>
     
     function prepEvent(){
@@ -291,6 +241,7 @@
       Salida += 100*x[i].value/Max + '" style= "fill:rgb(0,255,0);stroke-width:0.05;stroke:rgb(0,0,0)" />\n';
     }
     */
+
     Salida +='</svg> ';
     document.getElementById("Graf").innerHTML= Salida;
     
@@ -310,7 +261,7 @@
     <option value="2">2</option>
     <option value="3">3</option>
     <option value="4">4</option>
-    <option value="5">5</option>
+    <option value="5" selected="true">5</option>
     </select>
 
     <p>
@@ -332,7 +283,7 @@
     </div>
     
     <script> 
-    document.getElementById("emptyTable").innerHTML = genTable1(12,5);
+    document.getElementById("emptyTable").innerHTML = genTable1(5);
     redib ();
     prepEvent ();
     
@@ -366,7 +317,7 @@
         var numSucursales = parseInt(select.value);
 
         var tabla = document.getElementById("emptyTable");
-        tabla.innerHTML = genTable1(12,numSucursales);
+        tabla.innerHTML = genTable1(numSucursales);
         actualizarTotales(datos);
       }
 
