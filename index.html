@@ -106,29 +106,29 @@
         switch (numSucursales) {
           case 1:
             Suma = Number (x[i].value);
-            break;
+          break;
           case 2:
             Suma = Number (x[i].value);
             Suma += Number (x[i+1].value);
-            break;
+          break;
           case 3:
             Suma = Number (x[i].value);
             Suma += Number (x[i+1].value);
             Suma += Number (x[i+2].value);
-            break;
+          break;
           case 4:
             Suma = Number (x[i].value);
             Suma += Number (x[i+1].value);
             Suma += Number (x[i+2].value);
             Suma += Number (x[i+3].value);
-            break;
+          break;
           case 5:
             Suma = Number (x[i].value);
             Suma += Number (x[i+1].value);
             Suma += Number (x[i+2].value);
             Suma += Number (x[i+3].value);
             Suma += Number (x[i+4].value);
-            break;
+          break;
         }
         if (Suma > Max) {Max = Suma;}                
       }
@@ -165,19 +165,19 @@
         switch (c){
           case 1:
             Salida += "rgb(255,0,0)";
-            break;
+          break;
           case 2:
             Salida += "rgb(0,0,255)";
-            break;
+          break;
           case 3:
             Salida += "rgb(0,255,0)";
-            break;
+          break;
           case 4:
             Salida += "rgb(0,0,0)";
-            break;
+          break;
           case 5:
             Salida += "rgb(160,0,255)";
-            break;
+          break;
         }    
         Salida += ';stroke-width:0.1" />\n';
       }
@@ -187,40 +187,52 @@
     }
     
     function grafBarras() {
+      var Max= findMax();
+      var Salida ='<svg Id = "P" width="600px" height="400px" viewBox="0 0 120 100" preserveAspectRatio="none" >\n  ';
+      Salida += '<rect width="120" height="100" style="fill:rgb(220,220,220);stroke-width:0.1;stroke:rgb(255,255,0)" />\n ';
+      var x = document.getElementsByClassName("NF2");
+
+      switch (numSucursales) {
+        case 1:
+          Salida += imprimirBarra(0, '5', '255,0,0', x, Max);
+        break;
+        case 2:
+          Salida += imprimirBarra(0, '4', '255,0,0', x, Max);
+          Salida += imprimirBarra(1, '4', '0,0,255', x, Max);
+        break;
+        case 3:
+          Salida += imprimirBarra(0, '3', '255,0,0', x, Max);
+          Salida += imprimirBarra(1, '3', '0,0,255', x, Max);
+          Salida += imprimirBarra(2, '3', '0,255,0', x, Max);
+        break;
+        case 4:
+          Salida += imprimirBarra(0, '2', '255,0,0', x, Max);
+          Salida += imprimirBarra(1, '2', '0,0,255', x, Max);
+          Salida += imprimirBarra(2, '2', '0,255,0', x, Max);
+          Salida += imprimirBarra(3, '2', '0,0,0', x, Max);
+        break;
+        case 5:
+          Salida += imprimirBarra(0, '1', '255,0,0', x, Max);
+          Salida += imprimirBarra(1, '1', '0,0,255', x, Max);
+          Salida += imprimirBarra(2, '1', '0,255,0', x, Max);
+          Salida += imprimirBarra(3, '1', '0,0,0', x, Max);
+          Salida += imprimirBarra(4, '1', '160,0,255', x, Max);
+        break;
+      }
     
-    var Max= findMax();
-    var tId= "";
-    var YG ="";
-    var XG;
-    var Salida ='<svg Id = "P" width="600px" height="400px" viewBox="0 0 120 100" preserveAspectRatio="none" >\n  <rect width="120" height="100" style="fill:rgb(220,220,220);stroke-width:0.1;stroke:rgb(255,255,0)" />\n '; //<polyline  points="';//0,20 50,25 100,40 150,120 200,140 250,180"?;
-    
-    var x = document.getElementsByClassName("NF2");
-    var i;
-    //alert ("Entre");
-    //alert (x.length);
-    for (i=0;i<36; i+=3){
-      Salida += '<rect x = "';
-      Salida +=  i*10/3 + '" y = "' ;
-      Salida += 100*(1-x[i].value/Max )+ '"width= "3" height="';
-      Salida += 100*x[i].value/Max + '" style= "fill:rgb(255,0,0);stroke-width:0.05;stroke:rgb(0,0,0)" />\n';
+      Salida +='</svg> ';
+      document.getElementById("Graf").innerHTML= Salida;
     }
-    for (i=1;i<36; i+=3){
-      Salida += '<rect x = "';
-      Salida +=  i*10/3 + '" y = "' ;
-      Salida += 100*(1-x[i].value/Max )+ '"width= "3" height="';
-      Salida += 100*x[i].value/Max + '" style= "fill:rgb(0,0,255);stroke-width:0.05;stroke:rgb(0,0,0)" />\n';
-    }
-    
-    for (i=2;i<36; i+=3){
-      Salida += '<rect x = "';
-      Salida +=  i*10/3 + '" y = "' ;
-      Salida += 100*(1-x[i].value/Max )+ '"width= "3" height="';
-      Salida += 100*x[i].value/Max + '" style= "fill:rgb(0,255,0);stroke-width:0.05;stroke:rgb(0,0,0)" />\n';
-    }
-    
-    Salida +='</svg> ';
-    document.getElementById("Graf").innerHTML= Salida;
-    
+
+    function imprimirBarra(cont, width, color, x, Max) {
+      var Salida;
+      for (i=cont;i<numSucursales*12;i+=numSucursales){
+          Salida += '<rect x = "';
+          Salida +=  i*10/numSucursales + '" y = "' ;
+          Salida += 100*(1-x[i].value/Max )+ '"width= "'+width+'" height="';
+          Salida += 100*x[i].value/Max + '" style= "fill:rgb('+color+');stroke-width:0.05;stroke:rgb(0,0,0)" />\n ';
+        }
+      return Salida;
     }
 
     function grafApiladas() {
