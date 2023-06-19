@@ -6,6 +6,9 @@
     <script>
 
     var numSucursales = 3;
+    var Max = 0;
+    var MaxSuma = 0;
+    var x;
     datos =[0,1,2,3,4,5,6,7,8,9,10,11,12];
     for (let f=0;f<13;f++) datos[f]= ["0","a","a","a","a","a","t"];
     
@@ -86,8 +89,7 @@
     }
     
     function findMax(){
-      var Max=0;
-      var x = document.getElementsByClassName("NF2");
+      x = document.getElementsByClassName("NF2");
       
       for (i=0;i<x.length;i++){
         if (Number(x[i].value) > Max) {
@@ -98,8 +100,8 @@
     }
 
     function findMaxSuma(){
-      var Max = 0;
-      var x = document.getElementsByClassName("NF2");
+      MaxSuma = 0;
+      x = document.getElementsByClassName("NF2");
       console.log(x);
       for (i=0;i<x.length;i+=numSucursales){
         var Suma = 0;
@@ -130,9 +132,9 @@
             Suma += Number (x[i+4].value);
           break;
         }
-        if (Suma > Max) {Max = Suma;}                
+        if (Suma > MaxSuma) {MaxSuma = Suma;}                
       }
-      return Max;
+      return MaxSuma;
     }
 
     function selGrafYDibujar(){
@@ -142,7 +144,7 @@
     }
     
     function redib() {
-      var Max = findMax();
+      Max = findMax();
       var tId= "";
       var YG ="";
       var XG;
@@ -187,36 +189,36 @@
     }
     
     function grafBarras() {
-      var Max= findMax();
+      Max= findMax();
       var Salida ='<svg Id = "P" width="600px" height="400px" viewBox="0 0 120 100" preserveAspectRatio="none" >\n  ';
       Salida += '<rect width="120" height="100" style="fill:rgb(220,220,220);stroke-width:0.1;stroke:rgb(255,255,0)" />\n ';
-      var x = document.getElementsByClassName("NF2");
+      x = document.getElementsByClassName("NF2");
 
       switch (numSucursales) {
         case 1:
-          Salida += imprimirBarra(0, '5', '255,0,0', x, Max);
+          Salida += imprimirBarra(0, '5', '255,0,0');
         break;
         case 2:
-          Salida += imprimirBarra(0, '4', '255,0,0', x, Max);
-          Salida += imprimirBarra(1, '4', '0,0,255', x, Max);
+          Salida += imprimirBarra(0, '4', '255,0,0');
+          Salida += imprimirBarra(1, '4', '0,0,255');
         break;
         case 3:
-          Salida += imprimirBarra(0, '3', '255,0,0', x, Max);
-          Salida += imprimirBarra(1, '3', '0,0,255', x, Max);
-          Salida += imprimirBarra(2, '3', '0,255,0', x, Max);
+          Salida += imprimirBarra(0, '3', '255,0,0');
+          Salida += imprimirBarra(1, '3', '0,0,255');
+          Salida += imprimirBarra(2, '3', '0,255,0');
         break;
         case 4:
-          Salida += imprimirBarra(0, '2', '255,0,0', x, Max);
-          Salida += imprimirBarra(1, '2', '0,0,255', x, Max);
-          Salida += imprimirBarra(2, '2', '0,255,0', x, Max);
-          Salida += imprimirBarra(3, '2', '0,0,0', x, Max);
+          Salida += imprimirBarra(0, '2', '255,0,0');
+          Salida += imprimirBarra(1, '2', '0,0,255');
+          Salida += imprimirBarra(2, '2', '0,255,0');
+          Salida += imprimirBarra(3, '2', '0,0,0');
         break;
         case 5:
-          Salida += imprimirBarra(0, '1', '255,0,0', x, Max);
-          Salida += imprimirBarra(1, '1', '0,0,255', x, Max);
-          Salida += imprimirBarra(2, '1', '0,255,0', x, Max);
-          Salida += imprimirBarra(3, '1', '0,0,0', x, Max);
-          Salida += imprimirBarra(4, '1', '160,0,255', x, Max);
+          Salida += imprimirBarra(0, '1', '255,0,0');
+          Salida += imprimirBarra(1, '1', '0,0,255');
+          Salida += imprimirBarra(2, '1', '0,255,0');
+          Salida += imprimirBarra(3, '1', '0,0,0');
+          Salida += imprimirBarra(4, '1', '160,0,255');
         break;
       }
     
@@ -224,7 +226,7 @@
       document.getElementById("Graf").innerHTML= Salida;
     }
 
-    function imprimirBarra(cont, width, color, x, Max) {
+    function imprimirBarra(cont, width, color) {
       var Salida;
       for (i=cont;i<numSucursales*12;i+=numSucursales){
           Salida += '<rect x = "';
@@ -236,57 +238,112 @@
     }
 
     function grafApiladas() {
-    
-    var Max= findMaxSuma();
-    var tId= "";
-    var YG ="";
-    var XG;
-    var Salida ='<svg Id = "P" width="600px" height="400px" viewBox="0 0 120 100" preserveAspectRatio="none" >\n  <rect width="120" height="100" style="fill:rgb(220,220,220);stroke-width:0.1;stroke:rgb(255,255,0)" />\n '; //<polyline  points="';//0,20 50,25 100,40 150,120 200,140 250,180"?;
-    
-    var x = document.getElementsByClassName("NF2");
-    var i, Y1, Y2, Y3;
-    //alert ("Entre");
-    //alert (x.length);
-    for (i=0;i<36; i+=3){
-      Y1 = x[i].value/Max ;
-      Y2 = x[i+1].value/Max ;
-      Y3 = x[i+2].value/Max ;
+      MaxSuma= findMaxSuma();
+      var Salida ='<svg Id = "P" width="600px" height="400px" viewBox="0 0 120 100" preserveAspectRatio="none" >\n  ';
+      Salida += '<rect width="120" height="100" style="fill:rgb(220,220,220);stroke-width:0.1;stroke:rgb(255,255,0)" />\n ';
+      x = document.getElementsByClassName("NF2");
+      var i, Y1, Y2, Y3, Y4, Y5;
       
-      Salida += '<rect x = "';
-      Salida +=  i*10/3 + '" y = "' ;
-      Salida += 100*(1- Y1)+ '"width= "10" height="';
-      Salida += 100*Y1 + '" style= "fill:rgb(255,0,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
-    
-      Salida += '<rect x = "';
-      Salida +=  i*10/3 + '" y = "' ;
-      Salida += 100*(1-(Y2+Y1))+ '"width= "10" height="';
-      Salida += 100*Y2 + '" style= "fill:rgb(0,0,255);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
-    
-      Salida += '<rect x = "';
-      Salida +=  i*10/3 + '" y = "' ;
-      Salida += 100*(1-(Y1+Y2+Y3)) + '"width= "10" height="';
-      Salida += 100*Y3 + '" style= "fill:rgb(0,255,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+      switch (numSucursales) {
+        case 1:
+          for (i=0;i<12;i+=numSucursales){
+            Y1 = x[i].value/MaxSuma;
+            Salida += '<rect x = "';
+            Salida +=  i*10 + '" y = "' ;
+            Salida += 100*(1- Y1)+ '"width= "10" height="';
+            Salida += 100*Y1 + '" style= "fill:rgb(255,0,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+          }
+        break;
+        case 2:
+          for (i=0;i<12*numSucursales;i+=numSucursales){
+            Y1 = x[i].value/MaxSuma;
+            Y2 = x[i+1].value/MaxSuma ;
+            Salida += '<rect x = "';
+            Salida +=  i*10/numSucursales + '" y = "' ;
+            Salida += 100*(1- Y1)+ '"width= "10" height="';
+            Salida += 100*Y1 + '" style= "fill:rgb(255,0,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+            Salida += '<rect x = "';
+            Salida +=  i*10/numSucursales + '" y = "' ;
+            Salida += 100*(1-(Y2+Y1))+ '"width= "10" height="';
+            Salida += 100*Y2 + '" style= "fill:rgb(0,0,255);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+          }
+        break;
+        case 3:
+          for (i=0;i<12*numSucursales;i+=numSucursales){
+            Y1 = x[i].value/MaxSuma;
+            Y2 = x[i+1].value/MaxSuma;
+            Y3 = x[i+2].value/MaxSuma;
+            Salida += '<rect x = "';
+            Salida +=  i*10/numSucursales + '" y = "' ;
+            Salida += 100*(1- Y1)+ '"width= "10" height="';
+            Salida += 100*Y1 + '" style= "fill:rgb(255,0,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+            Salida += '<rect x = "';
+            Salida +=  i*10/numSucursales + '" y = "' ;
+            Salida += 100*(1-(Y2+Y1))+ '"width= "10" height="';
+            Salida += 100*Y2 + '" style= "fill:rgb(0,0,255);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+            Salida += '<rect x = "';
+            Salida +=  i*10/numSucursales + '" y = "' ;
+            Salida += 100*(1-(Y3+Y2+Y1))+ '"width= "10" height="';
+            Salida += 100*Y3 + '" style= "fill:rgb(0,255,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+          }
+        break;
+        case 4:
+          for (i=0;i<12*numSucursales;i+=numSucursales){
+            Y1 = x[i].value/MaxSuma;
+            Y2 = x[i+1].value/MaxSuma;
+            Y3 = x[i+2].value/MaxSuma;
+            Y4 = x[i+3].value/MaxSuma;
+            Salida += '<rect x = "';
+            Salida +=  i*10/numSucursales + '" y = "' ;
+            Salida += 100*(1- Y1)+ '"width= "10" height="';
+            Salida += 100*Y1 + '" style= "fill:rgb(255,0,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+            Salida += '<rect x = "';
+            Salida +=  i*10/numSucursales + '" y = "' ;
+            Salida += 100*(1-(Y2+Y1))+ '"width= "10" height="';
+            Salida += 100*Y2 + '" style= "fill:rgb(0,0,255);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+            Salida += '<rect x = "';
+            Salida +=  i*10/numSucursales + '" y = "' ;
+            Salida += 100*(1-(Y3+Y2+Y1))+ '"width= "10" height="';
+            Salida += 100*Y3 + '" style= "fill:rgb(0,255,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+            Salida += '<rect x = "';
+            Salida +=  i*10/numSucursales + '" y = "' ;
+            Salida += 100*(1-(Y4+Y3+Y2+Y1))+ '"width= "10" height="';
+            Salida += 100*Y4 + '" style= "fill:rgb(0,0,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+          }
+        break;
+        case 5:
+          for (i=0;i<12*numSucursales;i+=numSucursales){
+            Y1 = x[i].value/MaxSuma;
+            Y2 = x[i+1].value/MaxSuma;
+            Y3 = x[i+2].value/MaxSuma;
+            Y4 = x[i+3].value/MaxSuma;
+            Y5 = x[i+4].value/MaxSuma;
+            Salida += '<rect x = "';
+            Salida +=  i*10/numSucursales + '" y = "' ;
+            Salida += 100*(1- Y1)+ '"width= "10" height="';
+            Salida += 100*Y1 + '" style= "fill:rgb(255,0,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+            Salida += '<rect x = "';
+            Salida +=  i*10/numSucursales + '" y = "' ;
+            Salida += 100*(1-(Y2+Y1))+ '"width= "10" height="';
+            Salida += 100*Y2 + '" style= "fill:rgb(0,0,255);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+            Salida += '<rect x = "';
+            Salida +=  i*10/numSucursales + '" y = "' ;
+            Salida += 100*(1-(Y3+Y2+Y1))+ '"width= "10" height="';
+            Salida += 100*Y3 + '" style= "fill:rgb(0,255,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+            Salida += '<rect x = "';
+            Salida +=  i*10/numSucursales + '" y = "' ;
+            Salida += 100*(1-(Y4+Y3+Y2+Y1))+ '"width= "10" height="';
+            Salida += 100*Y4 + '" style= "fill:rgb(0,0,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+            Salida += '<rect x = "';
+            Salida +=  i*10/numSucursales + '" y = "' ;
+            Salida += 100*(1-(Y5+Y4+Y3+Y2+Y1))+ '"width= "10" height="';
+            Salida += 100*Y5 + '" style= "fill:rgb(160,0,255);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+          }
+        break;
       }
-    
-    /*
-    for (i=1;i<36; i+=3){
-      Salida += '<rect x = "';
-      Salida +=  i*10/3 + '" y = "' ;
-      Salida += 100*(1-x[i].value/Max )+ '"width= "3" height="';
-      Salida += 100*x[i].value/Max + '" style= "fill:rgb(0,0,255);stroke-width:0.05;stroke:rgb(0,0,0)" />\n';
-    }
-    
-    for (i=2;i<36; i+=3){
-      Salida += '<rect x = "';
-      Salida +=  i*10/3 + '" y = "' ;
-      Salida += 100*(1-x[i].value/Max )+ '"width= "3" height="';
-      Salida += 100*x[i].value/Max + '" style= "fill:rgb(0,255,0);stroke-width:0.05;stroke:rgb(0,0,0)" />\n';
-    }
-    */
 
-    Salida +='</svg> ';
-    document.getElementById("Graf").innerHTML= Salida;
-    
+      Salida +='</svg> ';
+      document.getElementById("Graf").innerHTML= Salida;
     }
     
     </script>
