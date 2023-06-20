@@ -24,7 +24,7 @@
     var f,c, tStr;
     Ncol++;
     tStr="";
-    for (c=0;c<Ncol;c++){ tStr += '<TH id = "BGC"> ' + Suc[c] +' </TH>'; }
+    for (c=0;c<Ncol;c++){ tStr += '<TH id = "BGC" class="suc'+(c)+'"> ' + Suc[c] +' </TH>'; }
     tStr += '<TH id = "BGC"> Total Mensual </TH>';
     
     for (f=1;f<13;f++){
@@ -102,7 +102,6 @@
     function findMaxSuma(){
       MaxSuma = 0;
       x = document.getElementsByClassName("NF2");
-      console.log(x);
       for (i=0;i<x.length;i+=numSucursales){
         var Suma = 0;
         switch (numSucursales) {
@@ -248,24 +247,15 @@
         case 1:
           for (i=0;i<12;i+=numSucursales){
             Y1 = x[i].value/MaxSuma;
-            Salida += '<rect x = "';
-            Salida +=  i*10 + '" y = "' ;
-            Salida += 100*(1- Y1)+ '"width= "10" height="';
-            Salida += 100*Y1 + '" style= "fill:rgb(255,0,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+            Salida += imprimirBarraApilada(i, Y1, Y1, '255,0,0');
           }
         break;
         case 2:
           for (i=0;i<12*numSucursales;i+=numSucursales){
             Y1 = x[i].value/MaxSuma;
             Y2 = x[i+1].value/MaxSuma ;
-            Salida += '<rect x = "';
-            Salida +=  i*10/numSucursales + '" y = "' ;
-            Salida += 100*(1- Y1)+ '"width= "10" height="';
-            Salida += 100*Y1 + '" style= "fill:rgb(255,0,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
-            Salida += '<rect x = "';
-            Salida +=  i*10/numSucursales + '" y = "' ;
-            Salida += 100*(1-(Y2+Y1))+ '"width= "10" height="';
-            Salida += 100*Y2 + '" style= "fill:rgb(0,0,255);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+            Salida += imprimirBarraApilada(i, Y1, Y1, '255,0,0');
+            Salida += imprimirBarraApilada(i, (Y1+Y2), Y2, '0,0,255');
           }
         break;
         case 3:
@@ -273,18 +263,9 @@
             Y1 = x[i].value/MaxSuma;
             Y2 = x[i+1].value/MaxSuma;
             Y3 = x[i+2].value/MaxSuma;
-            Salida += '<rect x = "';
-            Salida +=  i*10/numSucursales + '" y = "' ;
-            Salida += 100*(1- Y1)+ '"width= "10" height="';
-            Salida += 100*Y1 + '" style= "fill:rgb(255,0,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
-            Salida += '<rect x = "';
-            Salida +=  i*10/numSucursales + '" y = "' ;
-            Salida += 100*(1-(Y2+Y1))+ '"width= "10" height="';
-            Salida += 100*Y2 + '" style= "fill:rgb(0,0,255);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
-            Salida += '<rect x = "';
-            Salida +=  i*10/numSucursales + '" y = "' ;
-            Salida += 100*(1-(Y3+Y2+Y1))+ '"width= "10" height="';
-            Salida += 100*Y3 + '" style= "fill:rgb(0,255,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+            Salida += imprimirBarraApilada(i, Y1, Y1, '255,0,0');
+            Salida += imprimirBarraApilada(i, (Y1+Y2), Y2, '0,0,255');
+            Salida += imprimirBarraApilada(i, (Y1+Y2+Y3), Y3, '0,255,0');
           }
         break;
         case 4:
@@ -293,22 +274,10 @@
             Y2 = x[i+1].value/MaxSuma;
             Y3 = x[i+2].value/MaxSuma;
             Y4 = x[i+3].value/MaxSuma;
-            Salida += '<rect x = "';
-            Salida +=  i*10/numSucursales + '" y = "' ;
-            Salida += 100*(1- Y1)+ '"width= "10" height="';
-            Salida += 100*Y1 + '" style= "fill:rgb(255,0,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
-            Salida += '<rect x = "';
-            Salida +=  i*10/numSucursales + '" y = "' ;
-            Salida += 100*(1-(Y2+Y1))+ '"width= "10" height="';
-            Salida += 100*Y2 + '" style= "fill:rgb(0,0,255);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
-            Salida += '<rect x = "';
-            Salida +=  i*10/numSucursales + '" y = "' ;
-            Salida += 100*(1-(Y3+Y2+Y1))+ '"width= "10" height="';
-            Salida += 100*Y3 + '" style= "fill:rgb(0,255,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
-            Salida += '<rect x = "';
-            Salida +=  i*10/numSucursales + '" y = "' ;
-            Salida += 100*(1-(Y4+Y3+Y2+Y1))+ '"width= "10" height="';
-            Salida += 100*Y4 + '" style= "fill:rgb(0,0,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+            Salida += imprimirBarraApilada(i, Y1, Y1, '255,0,0');
+            Salida += imprimirBarraApilada(i, (Y1+Y2), Y2, '0,0,255');
+            Salida += imprimirBarraApilada(i, (Y1+Y2+Y3), Y3, '0,255,0');
+            Salida += imprimirBarraApilada(i, (Y1+Y2+Y3+Y4), Y4, '0,0,0');
           }
         break;
         case 5:
@@ -318,26 +287,11 @@
             Y3 = x[i+2].value/MaxSuma;
             Y4 = x[i+3].value/MaxSuma;
             Y5 = x[i+4].value/MaxSuma;
-            Salida += '<rect x = "';
-            Salida +=  i*10/numSucursales + '" y = "' ;
-            Salida += 100*(1- Y1)+ '"width= "10" height="';
-            Salida += 100*Y1 + '" style= "fill:rgb(255,0,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
-            Salida += '<rect x = "';
-            Salida +=  i*10/numSucursales + '" y = "' ;
-            Salida += 100*(1-(Y2+Y1))+ '"width= "10" height="';
-            Salida += 100*Y2 + '" style= "fill:rgb(0,0,255);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
-            Salida += '<rect x = "';
-            Salida +=  i*10/numSucursales + '" y = "' ;
-            Salida += 100*(1-(Y3+Y2+Y1))+ '"width= "10" height="';
-            Salida += 100*Y3 + '" style= "fill:rgb(0,255,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
-            Salida += '<rect x = "';
-            Salida +=  i*10/numSucursales + '" y = "' ;
-            Salida += 100*(1-(Y4+Y3+Y2+Y1))+ '"width= "10" height="';
-            Salida += 100*Y4 + '" style= "fill:rgb(0,0,0);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
-            Salida += '<rect x = "';
-            Salida +=  i*10/numSucursales + '" y = "' ;
-            Salida += 100*(1-(Y5+Y4+Y3+Y2+Y1))+ '"width= "10" height="';
-            Salida += 100*Y5 + '" style= "fill:rgb(160,0,255);stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+            Salida += imprimirBarraApilada(i, Y1, Y1, '255,0,0');
+            Salida += imprimirBarraApilada(i, (Y1+Y2), Y2, '0,0,255');
+            Salida += imprimirBarraApilada(i, (Y1+Y2+Y3), Y3, '0,255,0');
+            Salida += imprimirBarraApilada(i, (Y1+Y2+Y3+Y4), Y4, '0,0,0');
+            Salida += imprimirBarraApilada(i, (Y1+Y2+Y3+Y4+Y5), Y5, '160,0,255');
           }
         break;
       }
@@ -345,23 +299,39 @@
       Salida +='</svg> ';
       document.getElementById("Graf").innerHTML= Salida;
     }
+
+    function imprimirBarraApilada(cont, sumaY, height, color){
+      var Salida = '<rect x = "';
+      Salida +=  cont*10/numSucursales + '" y = "' ;
+      Salida += 100*(1-(sumaY))+ '"width= "10" height="';
+      Salida += 100*height + '" style= "fill:rgb('+color+');stroke-width:0.1;stroke:rgb(0,0,0)" />\n';
+      return Salida;
+    }
+
+    function renovarDatos(){
+      for (let f=1;f<13;f++){
+        for (let c=1;c<=5;c++) 
+            datos[f][c]= Math.round(50+Math.random()*50);
+      }
+      actualizarTabla();
+    }
     
     </script>
     </head> 
     
-    <body>
-    
-        
-    <h1> Ventas mensuales por Sucursal</h1>
+    <body> 
+    <div class="center">
+      <h1> Ventas mensuales por Sucursal</h1>
 
-    <label for="sucursales">Cuantas sucursales desea visualizar ?</label>
-    <select id="sucursales" name="sucursales" onchange="actualizarTabla()">
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3" selected="true">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    </select>
+      <label for="sucursales">Cuantas sucursales desea visualizar ?</label>
+      <select id="sucursales" name="sucursales" onchange="actualizarTabla()">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3" selected="true">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
     <p></p>
 
     <div class="grid-container">
@@ -375,7 +345,7 @@
     <input type="radio" name="tipoGraf" id="Apiladas" onclick="grafApiladas()">Barras Apiladas <br>
      
     <label for="CLK">Clicked:</label><input name="CLK0" type="text" id="CLK" value="-" size="3"><br><br>
-    <!-- <button name="Revisar" onclick="var kk= grafBarras()">Verificar</button> -->
+    <button name="Revisar" onclick="renovarDatos()">Renovar Datos</button>
     
     <script> 
       document.getElementById("emptyTable").innerHTML = genTable(3);

@@ -75,3 +75,31 @@ background-color: rgba(255,255,255,1);
     background-color: rgba(255,255,255,.55);
 }
 
+.suc1 {
+    background-color: red !important;
+    color: white;
+}
+
+.suc2 {
+    background-color: blue !important;
+    color: white;
+}
+
+.suc3 {
+    background-color: green !important;
+    color: white;
+}
+
+.suc4 {
+    background-color: black !important;
+    color: white;
+}
+
+.suc5 {
+    background-color: purple !important;
+    color: white;
+}
+
+.center {
+    text-align: center;
+}
